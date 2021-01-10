@@ -16,29 +16,49 @@ const TEMPLATES = [
 
 CLI
   .version(packageJson.version)
-  .arguments("<target>")
+  .option("--target <target>", "target path")
   .option("--template <template>", "template name")
   .option("--package <package>", "package name")
 
-  .action(async (targetInput, args) => {
-    const target = path.resolve(CWD, targetInput)
-    let { template, package } = args
+  .action(async ( args) => {
+    console.log(`Current version: ${packageJson.version}`)
+    console.log()
 
-    if (sh.test('-e', target)) {
-      console.error(`error: target directory '${targetInput}' already exists`)
-      process.exit(1)
+    let { target, template, package } = args
+
+    const resolveTarget = (name) => path.resolve(CWD, name || '')
+    let targetPath = resolveTarget(target)
+    const targetTest = (name, path) => !! name && ! sh.test('-e', path)
+
+    if (targetTest(target, targetPath)) {
+      console.log(chalk.whiteBright.bold(`Project directory:`), chalk.cyan(targetPath))
+    } else {
+      while (!targetTest(target, targetPath)) {
+        if (target && sh.test('-e', targetPath)) {
+          console.log('error: Target directory already exists')
+        }
+
+        const answers = await inquirer.prompt(
+          {
+            name: "target",
+            type: "input",
+            message: "Choose target directory:",
+          },
+        )
+
+        target = answers.target
+        targetPath = resolveTarget(target)
+      }
     }
 
-    console.log(chalk.whiteBright.bold(`Project directory:`), chalk.cyan(target))
+    const resolveTemplate = (name) => path.resolve(__dirname, `templates/${name}`)
+    let templatePath = resolveTemplate(template)
+    const templateTest = (path) => sh.test('-d', path)
 
-    let templatePath = path.resolve(__dirname, `templates/${template}`)
-
-    const templateTest = () => sh.test('-d', templatePath)
-
-    if (templateTest()) {
+    if (templateTest(templatePath)) {
       console.log(chalk.whiteBright.bold(`Project template:`), chalk.cyan(template))
     } else {
-      while (!templateTest()) {
+      while (!templateTest(templatePath)) {
         const answers = await inquirer.prompt(
           {
             name: "template",
@@ -49,7 +69,7 @@ CLI
         )
 
         template = answers.template
-        templatePath = path.resolve(__dirname, `templates/${template}`)
+        templatePath = resolveTemplate(template)
       }
     }
 
@@ -63,16 +83,16 @@ CLI
           name: "package",
           type: "input",
           message: "Choose package name:",
-          default: `@corets/${path.basename(target)}`,
+          default: `@corets/${path.basename(targetPath)}`,
         })
 
         package = answers.package
       }
     }
 
-    sh.cp("-r", templatePath, target)
-    sh.mv(`${target}/_package.json`, `${target}/package.json`)
-    sh.ls("-A", `${ target }/.*`, `${ target }/*`).forEach(file => {
+    sh.cp("-r", templatePath, targetPath)
+    sh.mv(`${targetPath}/_package.json`, `${targetPath}/package.json`)
+    sh.ls("-A", `${ targetPath }/.*`, `${ targetPath }/*`).forEach(file => {
       sh.sed("-i", "__PACKAGE_NAME__", package, file)
       sh.sed("-i", "__REPOSITORY__", package.replace('@', ''), file)
     })
@@ -81,14 +101,14 @@ CLI
     console.log(chalk.whiteBright.bold("Created files:"))
     console.log()
 
-    sh.ls("-A", `${ target }/.*`, `${ target }/*`).forEach(file => {
-      console.log('    ', file.replace(`${target}/`, ""))
+    sh.ls("-A", `${ targetPath }/.*`, `${ targetPath }/*`).forEach(file => {
+      console.log('    ', file.replace(`${targetPath}/`, ""))
     })
 
     console.log()
     console.log(chalk.whiteBright.bold("Run to finish setup:"))
     console.log()
-    console.log(`    cd ${ targetInput } && yarn install`)
+    console.log(`    cd ${ target } && yarn install`)
     console.log()
     console.log("Don't forget to double check the", chalk.whiteBright("repository"), "field in", chalk.whiteBright("package.json"))
     console.log("Don't forget to update", chalk.whiteBright("description"), "in", chalk.whiteBright(`readme.md`))
