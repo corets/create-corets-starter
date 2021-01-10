@@ -1,6 +1,6 @@
 {
   "name": "@corets/starter",
-  "version": "0.0.0",
+  "version": "0.0.1-0",
   "author": "Maxim Kott",
   "license": "MIT",
   "repository": "github:corets/starter",
@@ -9,7 +9,7 @@
     "registry": "https://registry.npmjs.org"
   },
   "bin": {
-    "generate": "index.js"
+    "create-corets-starter": "index.js"
   },
   "scripts": {
     "release": "np --no-release-draft --tag next",
