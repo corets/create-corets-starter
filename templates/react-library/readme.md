@@ -6,4 +6,4 @@
 yarn add __PACKAGE_NAME__
 ```
 
-__DESCRIPTION__
+# [Documentation](https://__GITHUB_ORGANISATION__.github.io/__GITHUB_REPOSITORY_NAME__)

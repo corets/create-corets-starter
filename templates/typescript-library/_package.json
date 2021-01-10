@@ -8,7 +8,7 @@
   "files": [
     "/dist"
   ],
-  "repository": "github:__REPOSITORY__",
+  "repository": "github:__GITHUB_ORGANISATION__/__GITHUB_REPOSITORY_NAME__",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"

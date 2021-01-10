@@ -90,11 +90,37 @@ CLI
       }
     }
 
+    let [githubOrganisation, githubRepositoryName] = package.indexOf('@') === 0 ? package.replace('@', '').split('/') : ['', package]
+
+    do {
+      const answers = await inquirer.prompt({
+        name: "githubOrganisation",
+        type: "input",
+        message: "GitHub organisation or username:",
+        default: githubOrganisation,
+      })
+
+      githubOrganisation = answers.githubOrganisation
+    } while ( ! githubOrganisation)
+
+    do {
+      const answers = await inquirer.prompt({
+        name: "githubRepositoryName",
+        type: "input",
+        message: "GitHub repository name:",
+        default: githubRepositoryName,
+      })
+
+      githubRepositoryName = answers.githubRepositoryName
+    } while ( ! githubOrganisation)
+
     sh.cp("-r", templatePath, targetPath)
     sh.mv(`${targetPath}/_package.json`, `${targetPath}/package.json`)
     sh.ls("-A", `${ targetPath }/.*`, `${ targetPath }/*`).forEach(file => {
       sh.sed("-i", "__PACKAGE_NAME__", package, file)
       sh.sed("-i", "__REPOSITORY__", package.replace('@', ''), file)
+      sh.sed("-i", "__GITHUB_ORGANISATION__", githubOrganisation, file)
+      sh.sed("-i", "__GITHUB_REPOSITORY_NAME__", githubRepositoryName, file)
     })
 
     console.log()
