@@ -16,6 +16,7 @@
   "scripts": {
     "test": "jest",
     "lint": "tsc --noEmit",
+    "format": "prettier --write .",
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "release": "np --no-release-draft --tag next",
     "prerelease": "np prerelease --no-release-draft --tag dev"
@@ -25,6 +26,7 @@
     "@types/node": "^13.9.1",
     "jest": "^25.1.0",
     "ts-jest": "^25.2.1",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "prettier": "2.2.1"
   }
 }
