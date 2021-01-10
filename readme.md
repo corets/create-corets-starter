@@ -8,12 +8,18 @@ This package provides a minimal and opinionated setup for your next @corets libr
 yarn global add create-corets-starter
 ```
 
-To scaffold a new package you can run any of the command below:
+To scaffold a new package you can run any of the commands below:
 
 ```sh
+# scaffold using yarn
 yarn create corets-starter
-# or
+
+# scaffold using npm
 npm create corets-starter
-# or
+
+# scaffold using npx
 npx create-corets-starter
+
+# scaffold if installed globally
+create-corets-starter
 ```
