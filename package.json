@@ -1,0 +1,31 @@
+{
+  "name": "create-corets-starter",
+  "version": "0.0.0",
+  "author": "Maxim Kott",
+  "license": "MIT",
+  "repository": "github:corets/starter",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "bin": {
+    "create-corets-starter": "index.js"
+  },
+  "scripts": {
+    "release": "np --no-release-draft --tag next",
+    "prerelease": "np prerelease --no-release-draft --tag dev"
+  },
+  "files": [
+    "index.js",
+    "templates"
+  ],
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "commander": "^6.2.1",
+    "inquirer": "^7.3.3",
+    "shelljs": "^0.8.4"
+  },
+  "devDependencies": {
+    "np": "^7.2.0"
+  }
+}
