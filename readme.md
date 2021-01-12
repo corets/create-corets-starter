@@ -4,13 +4,13 @@
 
 This package provides a minimal and opinionated setup for your next @corets library.
 
-```sh
+```bash
 yarn global add create-corets-starter
 ```
 
 To scaffold a new package you can run any of the commands below:
 
-```sh
+```bash
 # scaffold using yarn
 yarn create corets-starter
 
