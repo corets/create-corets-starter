@@ -22,18 +22,18 @@ CLI
 
   .action(async (target, args) => {
     console.log()
-    console.log(`Current version: ${packageJson.version}`)
+    console.log(`Current version: ${ packageJson.version }`)
     console.log()
 
     let { template, package } = args
 
-    const resolveTarget = (name) => path.resolve(CWD, name || '')
+    const resolveTarget = (name) => path.resolve(CWD, name || "")
     let targetPath = resolveTarget(target)
-    const targetTest = (name, path) => !! name && ! sh.test('-e', path)
+    const targetTest = (name, path) => !!name && !sh.test("-e", path)
 
     do {
-      if (target && sh.test('-e', targetPath)) {
-        console.log('error: Target directory already exists')
+      if (target && sh.test("-e", targetPath)) {
+        console.log("error: Target directory already exists")
       }
 
       const answers = await inquirer.prompt(
@@ -41,7 +41,7 @@ CLI
           name: "target",
           type: "input",
           message: "Choose target directory:",
-          default: target
+          default: target,
         },
       )
 
@@ -49,9 +49,9 @@ CLI
       targetPath = resolveTarget(target)
     } while (!targetTest(target, targetPath))
 
-    const resolveTemplate = (name) => path.resolve(__dirname, `templates/${name}`)
+    const resolveTemplate = (name) => path.resolve(__dirname, `templates/${ name }`)
     let templatePath = resolveTemplate(template)
-    const templateTest = (path) => sh.test('-d', path)
+    const templateTest = (path) => sh.test("-d", path)
 
     if (templateTest(templatePath)) {
       console.log(chalk.whiteBright.bold(`Project template:`), chalk.cyan(template))
@@ -71,7 +71,7 @@ CLI
       }
     }
 
-    const packageTest = () => !! package
+    const packageTest = () => !!package
 
     if (packageTest()) {
       console.log(chalk.whiteBright.bold(`Package name:`), chalk.cyan(package))
@@ -81,14 +81,14 @@ CLI
           name: "package",
           type: "input",
           message: "Choose package name:",
-          default: `@corets/${path.basename(targetPath)}`,
+          default: `@corets/${ path.basename(targetPath) }`,
         })
 
         package = answers.package
       }
     }
 
-    let [githubOrganisation, githubRepositoryName] = package.indexOf('@') === 0 ? package.replace('@', '').split('/') : ['', package]
+    let [githubOrganisation, githubRepositoryName] = package.indexOf("@") === 0 ? package.replace("@", "").split("/") : ["", package]
 
     do {
       const answers = await inquirer.prompt({
@@ -99,7 +99,7 @@ CLI
       })
 
       githubOrganisation = answers.githubOrganisation
-    } while ( ! githubOrganisation)
+    } while (!githubOrganisation)
 
     do {
       const answers = await inquirer.prompt({
@@ -110,35 +110,33 @@ CLI
       })
 
       githubRepositoryName = answers.githubRepositoryName
-    } while ( ! githubOrganisation)
+    } while (!githubOrganisation)
 
     sh.cp("-r", templatePath, targetPath)
-    sh.mv(`${targetPath}/_package.json`, `${targetPath}/package.json`)
-    sh.ls("-A", targetPath).forEach(file => {
-      if (file === ".git") return
-
-      const filePath = path.resolve(targetPath, file)
-
-      sh.sed("-i", /__PACKAGE_NAME__/g, package, filePath)
-      sh.sed("-i", /__REPOSITORY__/g, `${githubOrganisation}/${githubRepositoryName}`, filePath)
-      sh.sed("-i", /__GITHUB_ORGANISATION__/g, githubOrganisation, filePath)
-      sh.sed("-i", /__GITHUB_REPOSITORY_NAME__/g, githubRepositoryName, filePath)
-    })
+    sh.mv(`${ targetPath }/_package.json`, `${ targetPath }/package.json`)
+    sh.find(targetPath)
+      .filter(file => !file.includes(".git/") && file !== ".git" && sh.test("-f", file))
+      .forEach(file => {
+        sh.sed("-i", /__PACKAGE_NAME__/g, package, file)
+        sh.sed("-i", /__REPOSITORY__/g, `${ githubOrganisation }/${ githubRepositoryName }`, file)
+        sh.sed("-i", /__GITHUB_ORGANISATION__/g, githubOrganisation, file)
+        sh.sed("-i", /__GITHUB_REPOSITORY_NAME__/g, githubRepositoryName, file)
+      })
 
     sh.cd(targetPath)
       .exec("git init &>/dev/null")
-      .exec(`git remote add origin git@github.com:${githubOrganisation}/${githubRepositoryName}.git`)
+      .exec(`git remote add origin git@github.com:${ githubOrganisation }/${ githubRepositoryName }.git`)
 
     console.log()
     console.log(chalk.whiteBright.bold("Created files:"))
     console.log()
 
     sh.ls("-A", targetPath).forEach(file => {
-      console.log('    ', file.replace(`${targetPath}/`, ""))
+      console.log("    ", file.replace(`${ targetPath }/`, ""))
     })
 
     console.log()
-    console.log(chalk.whiteBright("GitHub repository initiated:"), `https://github.com/${githubOrganisation}/${githubRepositoryName}`)
+    console.log(chalk.whiteBright("GitHub repository initiated:"), `https://github.com/${ githubOrganisation }/${ githubRepositoryName }`)
 
     console.log()
     console.log(chalk.whiteBright.bold("Run to finish setup:"))

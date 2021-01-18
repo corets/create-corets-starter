@@ -4,6 +4,10 @@
   "author": "Maxim Kott",
   "license": "MIT",
   "repository": "github:corets/starter",
+  "keywords": [
+    "corets",
+    "starter"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
@@ -14,7 +18,7 @@
   "scripts": {
     "format": "prettier --write .",
     "release": "np --no-release-draft --tag next",
-    "prerelease": "np prerelease --no-release-draft --tag dev"
+    "devrelease": "np prerelease --no-release-draft --tag dev"
   },
   "files": [
     "index.js",
@@ -27,6 +31,7 @@
     "shelljs": "^0.8.4"
   },
   "devDependencies": {
+    "@types/shelljs": "^0.8.8",
     "np": "^7.2.0",
     "prettier": "2.2.1"
   }
