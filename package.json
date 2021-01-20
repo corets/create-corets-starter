@@ -13,7 +13,7 @@
     "registry": "https://registry.npmjs.org"
   },
   "bin": {
-    "create-corets-starter": "index.js"
+    "create-corets-starter": "bin/create-corets-starter"
   },
   "scripts": {
     "format": "prettier --write .",
@@ -21,8 +21,9 @@
     "devrelease": "np prerelease --no-release-draft --tag dev"
   },
   "files": [
-    "index.js",
-    "templates"
+    "src",
+    "templates",
+    "bin"
   ],
   "dependencies": {
     "chalk": "^4.1.0",
