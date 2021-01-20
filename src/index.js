@@ -148,9 +148,16 @@ CLI.version(packageJson.version)
     })
 
     console.log()
+    console.log(chalk.whiteBright("Repository initialised:"))
+    console.log()
     console.log(
-      chalk.whiteBright("GitHub repository initiated:"),
-      `https://github.com/${githubOrganisation}/${githubRepositoryName}`
+      `    https://github.com/${githubOrganisation}/${githubRepositoryName}`
+    )
+    console.log()
+    console.log(chalk.whiteBright("Create repository on GitHub:"))
+    console.log()
+    console.log(
+      `    https://github.com/organizations/${githubOrganisation}/repositories/new`
     )
 
     console.log()
