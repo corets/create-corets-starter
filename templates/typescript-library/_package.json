@@ -11,12 +11,14 @@
     "/dist"
   ],
   "repository": "github:__GITHUB_ORGANISATION__/__GITHUB_REPOSITORY_NAME__",
+  "homepage": "https://__GITHUB_ORGANISATION__.github.io/__GITHUB_REPOSITORY_NAME__",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
     "test": "jest",
+    "coverage": "jest --coverage && echo '\nOpen \"coverage/lcov-report/index.html\" in your browser\n'",
     "lint": "tsc --noEmit",
     "format": "prettier --write .",
     "build": "rm -rf dist && microbundle --entry src/index.ts --target web --format cjs,es",
