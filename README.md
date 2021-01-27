@@ -2,26 +2,4 @@
 
 <p align="center" style="margin: 0px 50px"><b><a href="https://corets.github.io/create-corets-starter">Documentation</a></b><br/><br/><br/></p>
 
-# Starter for @corets packages
-
-This package provides a minimal and opinionated setup for your next @corets library.
-
-```bash
-yarn global add create-corets-starter
-```
-
-To scaffold a new package you can run any of the commands below:
-
-```bash
-# scaffold using yarn
-yarn create corets-starter
-
-# scaffold using npm
-npm create corets-starter
-
-# scaffold using npx
-npx create-corets-starter
-
-# scaffold if installed globally
-create-corets-starter
-```
+<p align="center">Opinionated scaffolding tool for @corets packages</p>"
