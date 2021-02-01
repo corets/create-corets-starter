@@ -175,7 +175,7 @@ CLI.version(packageJson.version)
       "Don't forget to update",
       chalk.whiteBright("description"),
       "in",
-      chalk.whiteBright(`readme.md`)
+      chalk.whiteBright(`README.md`)
     )
     console.log()
   })
