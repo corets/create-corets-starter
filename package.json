@@ -20,7 +20,7 @@
   "scripts": {
     "format": "prettier --write .",
     "release": "np --no-release-draft --tag next",
-    "devrelease": "np prerelease --no-release-draft --tag dev"
+    "preview": "np --no-release-draft --tag dev"
   },
   "files": [
     "src",

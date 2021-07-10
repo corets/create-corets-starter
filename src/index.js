@@ -148,7 +148,7 @@ CLI.version(packageJson.version)
     })
 
     console.log()
-    console.log(chalk.whiteBright("Repository initialised:"))
+    console.log(chalk.whiteBright("Repository initialised with remote:"))
     console.log()
     console.log(
       `    https://github.com/${githubOrganisation}/${githubRepositoryName}`
