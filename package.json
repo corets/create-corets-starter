@@ -19,7 +19,7 @@
   },
   "scripts": {
     "format": "prettier --write .",
-    "release": "np --no-release-draft --tag next",
+    "release": "np --no-release-draft",
     "preview": "np --no-release-draft --tag dev"
   },
   "files": [
