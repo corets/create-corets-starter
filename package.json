@@ -1,7 +1,7 @@
 {
   "name": "create-corets-starter",
   "description": "Opinionated scaffolding tool for @corets packages",
-  "version": "0.1.0-0",
+  "version": "0.1.0",
   "author": "Maxim Kott",
   "license": "MIT",
   "repository": "github:corets/create-corets-starter",
