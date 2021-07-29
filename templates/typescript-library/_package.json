@@ -16,7 +16,7 @@
     "/dist"
   ],
   "repository": "github:__GITHUB_ORGANISATION__/__GITHUB_REPOSITORY_NAME__",
-  "homepage": "https://__GITHUB_ORGANISATION__.github.io/__GITHUB_REPOSITORY_NAME__",
+  "homepage": "https://docs.corets.io/__DOCS_NAMESPACE__/__GITHUB_REPOSITORY_NAME__",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
